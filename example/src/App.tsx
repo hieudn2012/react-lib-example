@@ -1,10 +1,26 @@
 import React from 'react'
+import { Provider } from "react-redux";
+import { FormJsonConfig } from 'ra-shop'
+import {createStore, applyMiddleware}  from 'redux';
+import Reducer from './reducers';
 
-import { ExampleComponent } from 'ra-shop'
-import 'ra-shop/dist/index.css'
+const config = {
+  fields: {
+    name: {
+      ui: { widget: 'text' },
+      label: 'Name'
+    }
+  }
+}
+
+const createStoreWithMiddleware = applyMiddleware()(createStore);
+const store = createStoreWithMiddleware(Reducer);
+
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
+  return <Provider store={store}>
+    <FormJsonConfig config={config}/>
+  </Provider>
 }
 
 export default App
